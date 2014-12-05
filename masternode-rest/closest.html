@@ -1,0 +1,144 @@
+<html>
+	<head>
+		<script src="jq.js" type="text/javascript"></script>  
+		<script type="text/javascript">
+
+			function callMsm() {
+				$.get("/nodes/closestnoderaw/" + macaddressVal, function(data, textStatus, jqXHR){
+					$("#debuginfo").text(""); // clear debuginfo
+
+					if (data.err) {
+						$(".raw").text(data.err);	
+					} else {
+						$(".raw").text("RAW: " + data.nodeId + " pwr: " + data.power);
+						if (data.nodeId == 1) {
+							$(".raw").css("background-color","#F7977A");
+						} else if (data.nodeId == 2)  {
+							$(".raw").css("background-color","#7EA7D8");
+						}
+						$("#debuginfo1").text("Raw: Client "+data.mac+" @ node "+data.nodeId+" (pwr "+data.power+") " + data.timestamp + ", " + data.seconds + " secs ago.");
+					}
+				});
+				$.get("/nodes/closestnodemedian/" + macaddressVal, function(data, textStatus, jqXHR){
+					if (data.err) {
+						$(".median").text(data.err);	
+					} else {
+						$(".median").text("MEDIAN: " + data.nodeId + " pwr: " + data.power);
+						if (data.nodeId == 1) {
+							$(".median").css("background-color","#F7977A");
+						} else if (data.nodeId == 2)  {
+							$(".median").css("background-color","#7EA7D8");
+						}
+
+						$("#debuginfo2").text("Median: Client "+data.mac+" @ node "+data.nodeId+
+							" (pwr "+data.power+") " + data.timestamp + ", " + data.seconds + " secs ago.");		
+						
+					}
+				});				
+				$.get("/nodes/closestnodethreshold/" + macaddressVal, function(data, textStatus, jqXHR){
+					if (data.err) {
+						$(".threshold").text(data.err);	
+					} else {
+						$(".threshold").text("THRESHOLD: " + data.nodeId + " pwr: " + data.power);
+						if (data.nodeId == 1) {
+							$(".threshold").css("background-color","#F7977A");
+						} else if (data.nodeId == 2)  {
+							$(".threshold").css("background-color","#7EA7D8");
+						}
+						$("#debuginfo3").text($("#debuginfo").text() +"Threshold: Client "+data.mac+" @ node "+data.nodeId+" (pwr "+data.power+") " + data.timestamp + ", " + data.seconds + " secs ago.");		
+					}
+				});			
+
+			}
+
+			
+
+			$(function(){
+				$("#start").on('click', function(e){
+					macaddressVal = $("#macaddress").val();
+					if (macaddressVal) {						
+						setInterval(callMsm, $('#refreshrate').val());
+						callMsm();
+					}
+				});
+
+			});
+			
+		</script>
+		<style>
+
+		ul#inputs
+		{
+			margin:0;
+			padding:0;
+			list-style-type:none;
+			width:100%;
+			position:relative;
+			display:block;
+			font-size:12px;
+			font-weight:bold;
+			font-family:Arial, Helvetica, sans-serif;
+			/*border-bottom:1px solid #000000;
+			border-top:1px solid #000000;*/
+		}
+
+		ul#panels
+		{
+			margin:0;
+			padding:0;
+			list-style-type:none;
+			width:100%;
+			position:relative;
+			display:block;
+			height:450px;
+			font-weight:bold;
+			font-family:Arial, Helvetica, sans-serif;
+			/*border-bottom:1px solid #000000;
+			border-top:1px solid #000000;*/
+		}
+
+		ul#panels div.raw {
+			height:150px;
+			width:auto;			
+			font-size:72px;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 150px; 
+		}
+		ul#panels div.median {
+			height:150px;
+			width:auto;			
+			font-size:72px;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 150px; 
+		}
+		ul#panels div.threshold {
+			height:150px;
+			width:auto;
+			font-size:72px;
+			text-align: center;
+			vertical-align: middle;
+			line-height: 150px; 
+
+		}
+		</style>
+	</head>
+	<body>
+		<ul id="inputs">
+			<li><input type="text" id="macaddress" class="macinput" value="84:51:81:40:1F:0E"/><br/></li>
+			<li><input type="text" id="refreshrate" class="macinput" value="197"/><br/></li>
+			<li><input type="button" id="start" class="macinput" value="Start!"/><br/><br/></li>
+		</ul>
+		<ul id="panels">
+			<li><div class="raw"></div><br/></li>
+			<li><div class="median"></div><br/></li>
+			<li><div class="threshold"></div><br/></li>
+		</ul>
+		<br/>
+		<br/>
+		<div id="debuginfo1"></div><br/>
+		<div id="debuginfo2"></div><br/>
+		<div id="debuginfo3"></div><br/>
+	</body>
+</html>

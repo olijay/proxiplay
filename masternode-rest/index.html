@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>My Express API server example</title>
+		<script src="jq.js"></script>  
+		<script src="myclient.js"></script>  
+	</head>
+	<body>
+		<H1>My Express API server example</H1>
+		<form id="userForm" method="POST" action="/users/user">
+			Add a USER<br/>
+			ip address: <input type="text" id="ip_address" name="ip"></input><br/>
+			mac address: <input type="text" id="mac" name="mac"></input><br/>
+			<input type="submit" value="Submit"></input>
+		</form>
+		<br/>
+		<br/>
+		<form id="nodeForm" method="POST" action="/nodes/nodes">
+			Add a NODE<br/>
+			id:  <input type="text" id="nodeId" name="nodeId"></input><br/>
+			mac address: <input type="text" id="mac" name="mac"></input><br/>
+			room ID:  <input type="text" id="roomId" name="roomId"></input><br/>
+			<input type="submit" value="Submit"></input>
+		</form>
+		<br/><br/>
+		<form id="edgeForm" method="POST" action="/nodes/edges">
+			Add an EDGE<br/>
+			fromNode:  <input type="text" id="fromNode" name="fromNode"></input><br/>
+			toNode: <input type="text" id="toNode" name="toNode"></input><br/>
+			walls:  <input type="text" id="walls" name="walls"></input><br/>
+			<input type="submit" value="Submit"></input>
+		</form>
+		<br/>
+		<br/>
+			<form id="msmForm" method="POST" action="/msm/msm">
+			Add a MEASUREMENT<br/>
+			bssid:  <input type="text" id="bssid" name="bssid" value="50:67:F0:87:EF:F7"></input><br/>
+			mac: <input type="text" id="mac" name="mac" value="68:5D:43:7D:C3:28"></input><br/>
+			power:  <input type="text" id="power" name="power" value="-30"></input><br/>
+			nodeId:  <input type="text" id="nodeId" name="nodeId" value="1"></input><br/>
+			channel:  <input type="text" id="channel" name="channel" value="6"></input><br/>			
+			<input type="submit" value="Submit"></input>
+		</form>
+		<br/>
+		<br/>
+		<input type="button" id="seeMsms" value="See measurements" /><br>
+		<input type="button" id="seeUsers" value="See users" /><br>		
+		<input type="button" id="seeNodes" value="See nodes" /><br>
+		<input type="button" id="seeEdges" value="See edges" /><br>
+		<br/>
+		<br/>
+		<input type="button" id="dropMeasurements" value="Clear measurements" /><br>
+		<input type="button" id="dropUsers" value="Clear users" /><br>		
+		<input type="button" id="dropNodes" value="Clear nodes" /><br>
+		<input type="button" id="dropEdges" value="Clear edges" /><br>
+
+	</body>
+</html>
