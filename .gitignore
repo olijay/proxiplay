@@ -1,3 +1,4 @@
 *.jar
 *.class
 masternode-rest/node_modules/**
+NodeClient
